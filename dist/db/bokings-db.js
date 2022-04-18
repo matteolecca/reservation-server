@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteBooking = exports.insertBooking = exports.getBooking = exports.getNextBookings = exports.getPastBookings = exports.getBookings = void 0;
+const tryCatch_1 = require("../utils/tryCatch");
+const consts_1 = require("./consts");
+const getBookings = async (userId) => await (0, tryCatch_1.trycatch)(consts_1.GET_BOOKINGS, [userId]);
+exports.getBookings = getBookings;
+const getPastBookings = async (userId, offset) => await (0, tryCatch_1.trycatch)(consts_1.GET_PAST_BOOKINGS, [userId, +offset]);
+exports.getPastBookings = getPastBookings;
+const getNextBookings = async (userId) => await (0, tryCatch_1.trycatch)(consts_1.GET_NEXT_BOOKINGS, [userId]);
+exports.getNextBookings = getNextBookings;
+const getBooking = async (userId, bookingId) => await (0, tryCatch_1.trycatch)(consts_1.GET_BOOKING, [userId, bookingId], true);
+exports.getBooking = getBooking;
+const insertBooking = async ({ userId, date, desk, site }) => await (0, tryCatch_1.trycatch)(consts_1.INSERT_BOOKING, [date, site, desk, userId]);
+exports.insertBooking = insertBooking;
+const deleteBooking = async (userId, id) => await (0, tryCatch_1.trycatch)(consts_1.DELETE_BOOKING, [id, userId]);
+exports.deleteBooking = deleteBooking;

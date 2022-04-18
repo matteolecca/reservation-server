@@ -1,12 +1,12 @@
 import express, { Request, Response, Application } from 'express';
-import { updateUserPassword } from './src/db/user-db';
-import { generateNewPassword } from './src/utils/userGenerator';
+import { updateUserPassword } from './db/user-db';
+import { generateNewPassword } from './utils/userGenerator';
 const app: Application = express();
 
 require('dotenv').config()
 const PORT = process.env.PORT || 8080;
 const cors = require('cors');
-const routers = require('./src/routers');
+const routers = require('./routers');
 
 var corsOptions = {
     origin: [

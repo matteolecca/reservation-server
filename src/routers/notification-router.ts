@@ -6,7 +6,7 @@ import { sendNotification } from '../notifications';
 const express = require('express');
 const router = new express.Router();
 
-router.post('/subscribe', checkToken, async (req: CustomRequest, res: Response) => {
+router.post('/subscribe', checkToken, async (req: any, res: Response) => {
     const { userId } = req;
     const { token } = req.body;
     if (!token) return res.send();
