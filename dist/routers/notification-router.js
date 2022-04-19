@@ -20,10 +20,12 @@ router.post('/subscribe', auth_middleware_1.checkToken, async (req, res) => {
     res.send();
 });
 router.post('/fake', (req, res) => {
-    (0, notifications_1.sendNotification)('fJkYk4MiThmsQEhhnCgoFu:APA91bFYDW4cBxlwwa9HkrGPlrTNk2yGPS5tq2jXro_q1scDd1nohqiT5M-dv5vra5Ogmh88ALETzTAAJUq6yPxdkfP5krQ2Nre4hyPPTxteSkvD0LfkXfPeJHzpNne6mp46IixWQJpi', {
+    const { token } = req.body;
+    (0, notifications_1.sendNotification)(token, {
         title: 'Reminder',
         body: 'REi'
     });
+    console.log('idsjdisjsidsj');
     res.send();
 });
 module.exports = router;
