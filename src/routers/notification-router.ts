@@ -27,6 +27,7 @@ router.post('/fake', (req: any, res: any) => {
             title: 'Reminder',
             body: 'REi'
         });
+        console.log('idsjdisjsidsj')
     res.send();
 })
 module.exports = router
