@@ -47,19 +47,15 @@ router.post('/', checkToken, async (req: BookingRequest, res: any) => {
 });
 
 router.delete('/:id', checkToken, async (req: BookingRequest, res: any) => {
-    console.log("id", req.params.id);
-    setTimeout(() => {
-        return res.send();
-    }, 2000);
-    // console.log(req.params.id, "PARAM ID");
-    // const { userId } = req;
-    // const { id } = req.params;
-    // if (!id) return res.status(400).send({ message: 'Error deleting' });
-    // console.log(id, "ID", userId, "USERID");
-    // const result = await deleteBooking(userId!, +id);
-    // console.log(result);
-    // if (isError(result)) return res.status(400).send({ message: 'Error deleting' });
-    // res.send();
+    console.log(req.params.id, "PARAM ID");
+    const { userId } = req;
+    const { id } = req.params;
+    if (!id) return res.status(400).send({ message: 'Error deleting' });
+    console.log(id, "ID", userId, "USERID");
+    const result = await deleteBooking(userId!, +id);
+    console.log(result);
+    if (isError(result)) return res.status(400).send({ message: 'Error deleting' });
+    res.send();
 })
 
 
