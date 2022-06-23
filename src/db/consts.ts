@@ -19,5 +19,8 @@ export const UPDATE_USER_REGISTERED_DEVICE = 'UPDATE registered_devices SET user
 export const CHECK_REGISTRATION = 'SELECT COUNT(*) AS count from registered_devices WHERE deviceToken = ?';
 export const GET_USER_REGISTERED_DEVICES = 'SELECT deviceToken FROM registered_devices WHERE userId = ?';
 /**CRON JOBS */
-export const CHECK_TOMORROW_RESERVATION = 'SELECT * FROM bookings join registered_devices where registered_devices.userId = bookings.userId and DATE(date) IN (CURDATE() + INTERVAL 1 DAY)  GROUP BY registered_devices.deviceToken;';
+export const CHECK_TOMORROW_RESERVATION = 'SELECT sitename, date,desk, devicetoken FROM bookings join registered_devices join sites where registered_devices.userId = bookings.userId and sites.id = bookings.site and DATE(date) IN (CURDATE() + INTERVAL 1 DAY)  GROUP BY registered_devices.deviceToken;';
 export const GET_EMAILS = 'SELECT email from user group by email';
+
+/*SITES*/
+export const GET_SITES = 'SELECT  * FROM sites'; 

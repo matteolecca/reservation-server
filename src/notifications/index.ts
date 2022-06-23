@@ -5,7 +5,7 @@ var fcm = new FCM(serverKey)
 
 
 
-export const sendNotification = (token: string, message: { title: string, body: string }) => {
+export const sendNotification = (token: string, message: { title: string, body: string; subtitle: string; badge: number }) => {
     const notificationMessage = generateNotificationBody(token, message);
     fcm.send(notificationMessage, function (err: any, response: any) {
         if (err) {
@@ -16,16 +16,18 @@ export const sendNotification = (token: string, message: { title: string, body: 
     });
 };
 
-const generateNotificationBody = (token: string, message: { title: string, body: string }) => {
-    const { title, body } = message;
+const generateNotificationBody = (token: string, message: { title: string, body: string; subtitle: string; badge: number }) => {
+    const { title, body, subtitle, badge } = message;
     return {
         collapse_key: 'your_collapse_key',
         to: token,
         notification: {
             title,
-            body
+            subtitle,
+            body,
+            badge,
+            sound: 'default',
         },
-
         data: {
             my_key: 'my value',
             my_another_key: 'my another value'

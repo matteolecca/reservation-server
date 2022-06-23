@@ -1,4 +1,5 @@
 import express, { Request, Response, Application } from 'express';
+import { schedule } from './cron/nofitication-cron';
 import { updateUserPassword } from './db/user-db';
 import { generateNewPassword } from './utils/userGenerator';
 const app: Application = express();
@@ -18,6 +19,7 @@ var corsOptions = {
         'http://172.20.10.4:8100',
         'http://192.168.1.10:8100',
         'http://localhost',
+        'http://192.168.1.180:8101',
     ],
     credentials: true,
     methods: ['POST', 'GET', 'DELETE', 'PUT'],
@@ -28,7 +30,8 @@ app.use(cors(corsOptions));
 app.use(routers);
 
 app.listen(PORT, () => {
-    console.log(`SERVER RUNNING ON PORT${PORT}`)
+    console.log(`SERVER RUNNING ON PORT${PORT}`);
+    // schedule();
 })
 
 

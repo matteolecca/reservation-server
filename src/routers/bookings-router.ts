@@ -31,13 +31,11 @@ router.get('/', checkToken, async (req: CustomRequest, res: any) => {
             bookings = await getNextBookings(userId);
             break;
     }
-    console.log(bookings, "BOOKINGS")
     return res.send(bookings);
 });
 
 router.post('/', checkToken, async (req: BookingRequest, res: any) => {
     const { userId, body } = req;
-    console.log(body, userId);
     const inserted = await insertBooking({
         ...body,
         userId
