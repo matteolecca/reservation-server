@@ -6,7 +6,7 @@ import { isError } from "../utils/resCkeck";
 var cron = require('node-cron');
 
 export const schedule = () => {
-    cron.schedule('* 12 * * *', async () => {
+    cron.schedule('* 7 * * *', async () => {
         console.log('checking tomorrow schedules');
         const res = await checkTomorrowReservations();
         if (isError(res)) return;
