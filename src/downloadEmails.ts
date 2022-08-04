@@ -1,6 +1,6 @@
 import path from "path";
 import { getEmails } from "./db/user-db"
-var XLSX = require("xlsx");
+const XLSX = require("xlsx");
 const d = async () => {
     // await exportUser();
 }

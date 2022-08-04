@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { checkEmailTaken, checkUsernameTaken, createUser, getUser, getUserById, getUsers, updateUserPassword } from "../db/user-db";
+import { checkEmailTaken, checkUsernameTaken, createUser, getUser, getUserById, updateUserPassword } from "../db/user-db";
 import { CustomRequest } from '../interfaces/custom-request';
 import { checkToken } from '../middlewares/auth-middleware';
-import { ResError } from "../interfaces/res-error";
 import { User } from "../interfaces/User";
 import { generateNewPassword, generateUser, validateUserPassword } from "../utils/userGenerator";
 import { generateToken, validateToken } from "../utils/webTokenValidator";
@@ -10,22 +9,17 @@ import Express from 'express';
 import { isError } from '../utils/resCkeck';
 
 
-const express = require('express');
-const router = new express.Router()
+const router = Express.Router()
 
 router.get('/user-data', checkToken, async (req: CustomRequest, res: Response) => {
     const { userId } = req;
-    console.log(userId);
     const user = await getUserById(userId);
-    setTimeout(() => {
-        res.send(user);
-    }, 2000);
+    res.send(user);
 });
 
 router.post('/login', async (req: { body: User }, res: Response) => {
     const { password, username, email } = req.body;
     const user = await getUser(email, username);
-    console.log(user);
     if (!user) return res.status(400).send({ message: 'No User' });
     if (isError(user)) return res.status(400).send({ message: 'Server error' });
     const validPwd = await validateUserPassword(password, user.password);
@@ -48,7 +42,7 @@ router.post('/signup', async (req: { body: User }, res: Response) => {
     return res.send({ token })
 });
 
-router.post('/validate-token', async (req: any, res: Response) => {
+router.post('/validate-token', async (req: Request, res: Response) => {
     const { token } = req.body;
     if (!token) return res.status(400).send({ message: 'No token provided' });
     const validToken = await validateToken(token);
@@ -56,7 +50,7 @@ router.post('/validate-token', async (req: any, res: Response) => {
     return res.send({ valid: true });
 });
 
-router.post('/update-password', checkToken, async (req: CustomRequest, res: Express.Response) => {
+router.post('/update-password', checkToken, async (req: CustomRequest, res: Response) => {
     const { userId } = req;
     const { password } = req.body;
     const encrPwd = await generateNewPassword(password);
@@ -66,7 +60,4 @@ router.post('/update-password', checkToken, async (req: CustomRequest, res: Expr
     return res.send();
 });
 
-
-
-
-module.exports = router
+export default router;

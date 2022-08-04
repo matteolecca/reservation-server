@@ -1,19 +1,14 @@
-import { Console } from 'console';
-import Express from 'express';
-import { deleteBooking, getBooking, getBookings, getNextBookings, getPastBookings, insertBooking } from '../db/bokings-db';
+import { deleteBooking, getBooking, getNextBookings, getPastBookings, insertBooking } from '../db/bokings-db';
 import { BookingRequest, CustomRequest } from '../interfaces/custom-request';
 import { checkToken } from '../middlewares/auth-middleware';
 import { isError } from '../utils/resCkeck';
-import { validateToken } from '../utils/webTokenValidator';
-const express = require('express');
-const router = new express.Router()
-const _token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUzZTNjNWM0LTRkZjUtNDdjOC1iNzgyLTJlZjM0ODg3ZGJkYSIsImlhdCI6MTY0OTQ5NzUxNiwiZXhwIjo0MjQxNDk3NTE2fQ.mBZMITog-1ixYooDj1wcbVTpvoMzgYzX4uxBlMCEi1U';
+import express from 'express';
+const router = express.Router()
 
 router.get('/:bookingId', checkToken, async (req: CustomRequest, res: any) => {
     const { bookingId } = req.params;
     const { userId } = req;
     const booking = await getBooking(userId, bookingId);
-    console.log(booking)
     setTimeout(() => {
         return res.send(booking);
     }, 1000);
@@ -22,7 +17,7 @@ router.get('/:bookingId', checkToken, async (req: CustomRequest, res: any) => {
 router.get('/', checkToken, async (req: CustomRequest, res: any) => {
     const { userId } = req;
     const { type, offset } = req.query;
-    let bookings;
+    let bookings: any;
     switch (type) {
         case 'past':
             bookings = await getPastBookings(userId, offset);
@@ -31,7 +26,9 @@ router.get('/', checkToken, async (req: CustomRequest, res: any) => {
             bookings = await getNextBookings(userId);
             break;
     }
-    return res.send(bookings);
+    setTimeout(() => {
+        return res.send(bookings);
+    }, 2000);
 });
 
 router.post('/', checkToken, async (req: BookingRequest, res: any) => {
@@ -58,4 +55,4 @@ router.delete('/:id', checkToken, async (req: BookingRequest, res: any) => {
 
 
 
-module.exports = router
+export default router;

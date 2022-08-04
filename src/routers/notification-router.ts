@@ -1,26 +1,25 @@
 import { Request, Response } from 'express';
 import { checkDeviceRegistered, getUserRegisteredDevices, registerUserDevice, updateRegisteredUserDevice } from '../db/user-db';
-import { CustomRequest } from '../interfaces/custom-request';
 import { checkToken } from '../middlewares/auth-middleware';
 import { sendNotification } from '../notifications';
-const express = require('express');
-const router = new express.Router();
+import express from 'express';
+import { CustomRequest } from '../interfaces/custom-request';
+const router = express.Router();
 
-router.post('/subscribe', checkToken, async (req: any, res: Response) => {
-    console.log('Subsctibe');
+router.post('/subscribe', checkToken, async (req: CustomRequest, res: Response) => {
     const { userId } = req;
     const { token } = req.body;
-    if (!token) return res.send();
-    const { count, error } = await checkDeviceRegistered(userId!, token);
+    if (!token || !userId) return res.send();
+    const { count } = await checkDeviceRegistered(userId, token);
     if (count) {
-        await updateRegisteredUserDevice(userId!, token);
+        await updateRegisteredUserDevice(userId, token);
         return res.send();
     }
-    await registerUserDevice(userId!, token);
+    await registerUserDevice(userId, token);
     res.send();
 });
 
-router.post('/fake', async (req: any, res: any) => {
+router.post('/fake', async (req: Request, res: Response) => {
     const { userId } = req.body;
     console.log(userId);
     const registeredDevices = await getUserRegisteredDevices(userId);
@@ -31,8 +30,8 @@ router.post('/fake', async (req: any, res: any) => {
             badge: 1,
             subtitle: 'Desk 3'
         });
-    registeredDevices.forEach((device: { deviceToken: string }) => {
-    });
+    // registeredDevices.forEach((device: { deviceToken: string }) => {
+    // });
     res.send();
 })
-module.exports = router
+export default router;

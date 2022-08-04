@@ -1,9 +1,7 @@
 const FCM = require('fcm-node')
 
-var serverKey = 'AAAA8-nd2-E:APA91bGgQpEDneMHDdmJi2TzIaKFar0QCYqMKrHKDPEvIXA1gDMLdupk9mu_86em9bXl2L9yHWu4DQR0ijv4UjHYU1dCxDMiqqrrDrbWOyAMurYeD9z6-UC6lKaclXb2FRNXhj_HjwhA'
-var fcm = new FCM(serverKey)
-
-
+const serverKey = 'AAAA8-nd2-E:APA91bGgQpEDneMHDdmJi2TzIaKFar0QCYqMKrHKDPEvIXA1gDMLdupk9mu_86em9bXl2L9yHWu4DQR0ijv4UjHYU1dCxDMiqqrrDrbWOyAMurYeD9z6-UC6lKaclXb2FRNXhj_HjwhA'
+const fcm = new FCM(serverKey)
 
 export const sendNotification = (token: string, message: { title: string, body: string; subtitle: string; badge: number }) => {
     const notificationMessage = generateNotificationBody(token, message);
@@ -17,16 +15,13 @@ export const sendNotification = (token: string, message: { title: string, body: 
 };
 
 const generateNotificationBody = (token: string, message: { title: string, body: string; subtitle: string; badge: number }) => {
-    const { title, body, subtitle, badge } = message;
+    // const { title, body, subtitle, badge } = message;
     return {
         collapse_key: 'your_collapse_key',
         to: token,
         notification: {
-            title,
-            subtitle,
-            body,
-            badge,
             sound: 'default',
+            ...message,
         },
         data: {
             my_key: 'my value',
