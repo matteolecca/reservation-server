@@ -1,18 +1,24 @@
-var jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken";
+const tokenSecret = process.env.TOKEN_SECRET;
 
 export const validateToken = (token: string) => {
+    if(!tokenSecret){
+        return { error: "No secret" };
+    }
     try {
-        var decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-        return decoded
+        return jwt.verify(token, tokenSecret);
     }
     catch (error) {
-        return { error: error }
+        return { error: error };
     }
-}
+};
 
 export const generateToken = (id?: string): string => {
-    const token = jwt.sign({ id }, process.env.TOKEN_SECRET, {
+    if(!tokenSecret){
+        return "";
+    }
+    const token = jwt.sign({ id }, tokenSecret, {
         expiresIn: 1000 * 60 * 60 * 24 * 30
     });
-    return token
-}
+    return token;
+};

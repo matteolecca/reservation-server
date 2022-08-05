@@ -1,5 +1,5 @@
-import Express from 'express';
-import { Booking } from './booking';
+import Express from "express";
+import { Booking } from "./booking";
 
 export interface CustomRequest extends Express.Request {
     userId?: string;
