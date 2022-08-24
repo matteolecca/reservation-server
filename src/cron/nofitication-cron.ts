@@ -3,11 +3,10 @@ import { sendNotification } from "../notifications";
 import { REMINDER_BOOKING } from "../notifications/consts";
 import { isError } from "../utils/resCkeck";
 
-import cron from "node-cron";
+import {schedule as startSchedule} from "node-cron";
 
 export const schedule = () => {
-    cron.schedule("* 7 * * *", async () => {
-        console.log("checking tomorrow schedules");
+    startSchedule("* 7 * * *", async () => {
         const res = await checkTomorrowReservations();
         if (isError(res)) return;
         res.forEach((device: { devicetoken: string; sitename: string; desk: number }) => {

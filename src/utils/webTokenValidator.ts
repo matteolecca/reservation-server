@@ -13,9 +13,9 @@ export const validateToken = (token: string) => {
     }
 };
 
-export const generateToken = (id?: string): string => {
+export const generateToken = (id?: string): string | {error: string} => {
     if(!tokenSecret){
-        return "";
+        return { error: "No secret" };
     }
     const token = jwt.sign({ id }, tokenSecret, {
         expiresIn: 1000 * 60 * 60 * 24 * 30
