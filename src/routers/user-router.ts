@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { checkEmailTaken, checkUsernameTaken, createUser, getUser, getUserById, updateUserPassword } from "../db/user-db";
+import { checkEmailTaken, createUser, getUser, getUserById, updateUserPassword } from "../db/user-db";
 import { CustomRequest } from "../interfaces/custom-request";
 import { checkToken } from "../middlewares/auth-middleware";
 import { User } from "../interfaces/User";
@@ -28,11 +28,10 @@ router.post("/login", async (req: { body: User }, res: Response) => {
     return res.send({ token });
 });
 router.post("/signup", async (req: { body: User }, res: Response) => {
-    const { username, email } = req.body;
+    const { email } = req.body;
     const existingEmail = await checkEmailTaken(email);
+    if (isError(existingEmail)) return res.status(500).send({ message: "Server error" });
     if (existingEmail.exist) return res.status(401).send({ message: "E-Mail already taken" });
-    const existingUsername = await checkUsernameTaken(username);
-    if (existingUsername.exist) return res.status(401).send({ message: "Username already taken" });
     const user = await generateUser(req.body);
     if (!user) return res.status(401).send({ message: "No User" });
     if (isError(user)) return res.status(500).send({ message: "Server error" });

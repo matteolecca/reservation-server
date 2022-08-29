@@ -45,7 +45,6 @@ router.post("/", checkToken, async (req: BookingRequest, res: any) => {
 });
 
 router.delete("/:id", checkToken, async (req: BookingRequest, res: any) => {
-    console.log(req.params.id, "PARAM ID");
     const { userId } = req;
     const { id } = req.params;
     if (!id) return res.status(401).send({ message: "Unhautorized" });

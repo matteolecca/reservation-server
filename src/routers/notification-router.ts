@@ -21,7 +21,6 @@ router.post("/subscribe", checkToken, async (req: CustomRequest, res: Response) 
 
 router.post("/fake", async (req: Request, res: Response) => {
     const { userId } = req.body;
-    console.log(userId);
     const registeredDevices = await getUserRegisteredDevices(userId);
     sendNotification("eNEVEgM3K0Gaq8mGabbt_d:APA91bEQg0T9MOjHvBgfMH9J4ksscJpSpG9dhofQRLpwF2eictGHuVb450REcJlF5u3Q7PA62p_e06-myJWpMeiO8PhZz2jVkHAhwSsTLN3ZhmBW5PR4jrU2AZo8qzfBKRK0CjBQQaHa",
         {
