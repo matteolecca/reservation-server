@@ -6,7 +6,7 @@ const fcm = new FCM(serverKey);
 
 export const sendNotification = (token: string, message: { title: string, body: string; subtitle: string; badge: number }) => {
     const notificationMessage = generateNotificationBody(token, message);
-    fcm.send(notificationMessage, function (err: any, response: any) {
+    fcm.send(notificationMessage, function (err: never, response: never) {
         if (err) {
             console.log("Something has gone wrong!", err);
         } else {

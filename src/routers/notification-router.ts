@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/subscribe", checkToken, async (req: CustomRequest, res: Response) => {
     const { userId } = req;
     const { token } = req.body;
+    console.log(token);
     if (!token || !userId) return res.send();
     const { count } = await checkDeviceRegistered(userId, token);
     if (count) {
@@ -22,7 +23,7 @@ router.post("/subscribe", checkToken, async (req: CustomRequest, res: Response) 
 router.post("/fake", async (req: Request, res: Response) => {
     const { userId } = req.body;
     const registeredDevices = await getUserRegisteredDevices(userId);
-    sendNotification("eNEVEgM3K0Gaq8mGabbt_d:APA91bEQg0T9MOjHvBgfMH9J4ksscJpSpG9dhofQRLpwF2eictGHuVb450REcJlF5u3Q7PA62p_e06-myJWpMeiO8PhZz2jVkHAhwSsTLN3ZhmBW5PR4jrU2AZo8qzfBKRK0CjBQQaHa",
+    sendNotification("dkD5mW_DoEW4kJsK5XC-Qa:APA91bGFZMsypDDYjVqDhlZxzdMGfE5DK2CIeEmVmrhxVRjT9k4Gojm7rri8wexgzauRG0MBiVgBeGmqK5m2YqdnOmNCGSU-N7otqeHshlDDPuxiXFE2dkGNf_6W9MDuRG3rGx7Y1R8N",
         {
             title: "Reminder Prenotazione",
             body: "12-08-2022",
